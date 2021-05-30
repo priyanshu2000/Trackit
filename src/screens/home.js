@@ -23,6 +23,7 @@ const Home = () => {
     const [date, setDate] = useState()
     const [selectedCard, setselectedCard] = useState('')
     const [ExpensesList, setExpensesList] = useState([])
+    const [showConfirm, setshowConfirm] = useState(false)
 
     useEffect(() => {
         getExpenses().then(response=>setExpensesList(response));
@@ -55,7 +56,7 @@ const Home = () => {
 
     const onDeleteExpense = ()=>{
         deleteExpense(selectedCard.id)
-                .then((response)=>{setExpensesList(response);setshowDilouge(false)});
+                .then((response)=>{setExpensesList(response);setshowDilouge(false);setshowConfirm(false)});
     }
 
     const onEditExpense = ()=>{
@@ -81,12 +82,21 @@ const Home = () => {
                             <ActionButton title='Save' color={Colors.yellow} onPress={()=>{onAddExpense()}} />
                          </Dialogue>}
         if(dialogueType === 'view')
-                {return <Dialogue heading={selectedCard.type} onClose={()=>setshowDilouge(false)} >
+                {return <Dialogue heading={selectedCard.type} onClose={()=>{setshowDilouge(false);setshowConfirm(false)}} >
                             <Text style={[{color:selectedCard.type === 'Income' ? Colors.green : Colors.darkred},styles.viewAmountText]}>${selectedCard.amount}</Text>
                             <Text style={styles.viewDescriptionText} >{selectedCard.description}</Text>
                             <Text style={styles.viewDateText} >{selectedCard.date}</Text>
-                            <ActionButton title='Edit' color={Colors.yellow} onPress={()=>setdialogueType('edit')} />
-                            <ActionButton title='Delete' color={Colors.darkred} onPress={()=>onDeleteExpense()} />
+                           { showConfirm ?
+                            <>
+                              <Text style={{margin:3.5}}>Are you sure you want to delete ?</Text>
+                              <ActionButton title='Cancel' onPress={()=>setshowConfirm(false)} />
+                              <ActionButton title='Confirm' color={Colors.darkred} onPress={()=>onDeleteExpense()} />
+                            </> :
+                            <>
+                              <ActionButton title='Edit' color={Colors.yellow} onPress={()=>setdialogueType('edit')} />
+                              <ActionButton title='Delete' color={Colors.darkred} onPress={()=>setshowConfirm(true)} />
+                            </>
+                            }
                         </Dialogue>}
         if(dialogueType === 'edit')
                 {return <Dialogue heading={selectedCard.type} onClose={()=>setshowDilouge(false)} >
