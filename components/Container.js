@@ -1,5 +1,6 @@
 import React from 'react'
-import {View, StyleSheet} from 'react-native'
+import { View, StyleSheet } from 'react-native'
+import colors from '../constants/colors'
 
 const Container = ({children}) => {
     return (
@@ -8,7 +9,7 @@ const Container = ({children}) => {
 }
 
 const styles = StyleSheet.create({
-    container:{alignItems:'center',flex:1,width:'100%',backgroundColor:'#F5F5F5'}
+    container:{alignItems:'center',flex:1,width:'100%',backgroundColor:colors.white}
 })
 
 export default Container
