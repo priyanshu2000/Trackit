@@ -1,7 +1,7 @@
 import React from 'react';
-import Home from './src/screens/home';
+import Home from './src/screens/Home';
 import Toast from 'react-native-toast-message';
-import {ToastConfig} from './components/toast-message'
+import { ToastConfig } from './components/ToastMessage';
 
 export default function App() {
     return (

@@ -1,7 +1,7 @@
 import React, { useRef, useEffect } from 'react'
 import { StyleSheet, Animated, Dimensions, View, Platform } from 'react-native'
-import Colors from '../constants/colors'
-import {StatusBar} from "expo-status-bar"
+import colors from '../constants/colors'
+import { StatusBar } from "expo-status-bar"
 
 const Header = () => {
 
@@ -30,8 +30,8 @@ const Header = () => {
 
     return (
         <>
-            <View style={{width:'100%',paddingTop: Platform.OS === "android" ? 20 : 0}} >
-            <StatusBar backgroundColor={Colors.yellow} />
+            <View style={styles.statusbarContainer} >
+            <StatusBar backgroundColor={colors.yellow} />
             </View>
             <Animated.View style={[styles.container,{height:shrinkAnim}]} >
                 <Animated.Text style={[styles.title,{fontSize:shrinkText}]}>Trackit</Animated.Text>
@@ -41,8 +41,9 @@ const Header = () => {
 }
 
 const styles = StyleSheet.create({
-    container:{backgroundColor:Colors.yellow,width:'100%',alignItems:'center',justifyContent:"center",paddingVertical:25,height:'100%'},
-    title:{color:'#fff',fontWeight:'bold',}
+    container:{backgroundColor:colors.yellow,width:'100%',alignItems:'center',justifyContent:"center",paddingVertical:25,height:'100%'},
+    statusbarContainer:{width:'100%',paddingTop: Platform.OS === "android" ? 20 : 0},
+    title:{color:colors.white,fontWeight:'bold',}
 })
 
 export default Header

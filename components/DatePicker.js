@@ -3,6 +3,7 @@ import { View, StyleSheet, TouchableOpacity, Platform, Text } from 'react-native
 import DateTimePicker from '@react-native-community/datetimepicker';
 import dayjs from 'dayjs';
 import { Ionicons } from '@expo/vector-icons';
+import colors from '../constants/colors';
 
 export const Today = dayjs(new Date()).format('MMMM D, YYYY')
 
@@ -10,7 +11,7 @@ const DatePicker = ({ onValueChange, value }) => {
 
   const [date, setDate] = useState(value);
   const [show, setShow] = useState(false);
-  const [showError, setshowError] = useState(false)
+  const [showError, setShowError] = useState(false)
 
   const onChange = (event, selectedDate) => {
     const currentDate = selectedDate || date;
@@ -19,8 +20,8 @@ const DatePicker = ({ onValueChange, value }) => {
     onValueChange(dayjs(selectedDate).format('MMMM D, YYYY'))
     const date1 = dayjs(new Date());
     const date2 = dayjs(currentDate);
-    if(date1.diff(date2) <= 0){setshowError(true)}
-    else{setshowError(false)}
+    if(date1.diff(date2) <= 0){setShowError(true)}
+    else{setShowError(false)}
   };
 
   const showMode = () => {
@@ -28,12 +29,12 @@ const DatePicker = ({ onValueChange, value }) => {
   };
 
   return (
-    <View style={{width:'100%'}}>
-      <TouchableOpacity onPress={showMode} style={[styles.input,{borderColor: showError ? 'red' : 'black'}]} >
-          <Text style={{opacity:0.6}} >{date ? dayjs(date).format('MMMM D, YYYY') : 'Date'}</Text>
-          {date ? <>{ showError ?  <Ionicons name='alert-circle' color='red' size={20} /> : <Ionicons name='checkmark-circle' color='green' size={20} /> }</> : null}
+    <View style={styles.container}>
+      <TouchableOpacity onPress={showMode} style={[styles.input,{borderColor: showError ? colors.red : colors.black}]} >
+          <Text style={styles.date} >{date ? dayjs(date).format('MMMM D, YYYY') : 'Date'}</Text>
+          {date && <>{ showError ?  <Ionicons name='alert-circle' color='red' size={20} /> : <Ionicons name='checkmark-circle' color='green' size={20} /> }</>}
       </TouchableOpacity>
-      <Text style={styles.error}>{ showError ? 'The selected Date should be Today or Older' : '' }</Text>
+      {showError && <Text style={styles.error}>The selected Date should be Today or Older</Text>}
       {show && (
         <DateTimePicker
           testID="dateTimePicker"
@@ -49,8 +50,10 @@ const DatePicker = ({ onValueChange, value }) => {
 };
 
 const styles = StyleSheet.create({
-    input: { borderWidth: 0.8,fontSize: 14, color: '#222222', paddingHorizontal:10,paddingVertical:9,borderRadius:6,marginVertical: 5,justifyContent:'space-between',flexDirection:'row' },
-    error: { color: '#FF3752', fontSize: 12, marginTop: 5 }
+  container:{width:'100%'},
+  input: { borderWidth: 0.8,fontSize: 14, color: colors.grey, paddingHorizontal:10,paddingVertical:9,borderRadius:6,marginVertical: 5,justifyContent:'space-between',flexDirection:'row' },
+  date:{opacity:0.6},
+  error: { color: colors.red, fontSize: 12, marginTop: 5 }
 })
 
 export default DatePicker;

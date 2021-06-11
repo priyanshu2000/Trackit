@@ -1,5 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import ToastMessage from '../components/toast-message'
+import ToastMessage from '../components/ToastMessage'
 
 export const addExpense = async ( data ) => {
     try {
